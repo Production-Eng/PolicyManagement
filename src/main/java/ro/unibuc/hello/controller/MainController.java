@@ -12,6 +12,8 @@ import ro.unibuc.hello.models.PolicyRepository;
 import ro.unibuc.hello.models.Policy;
 import ro.unibuc.hello.models.PrimesRepository;
 import ro.unibuc.hello.models.Primes;
+import ro.unibuc.hello.models.DamageClaimRepository;
+import ro.unibuc.hello.models.DamageClaim;
 import java.util.Date;
 
 @Controller // This means that this class is a Controller
@@ -24,6 +26,8 @@ public class MainController {
     @Autowired
     private PrimesRepository primesRepository;
 
+    @Autowired
+    private DamageClaimRepository damageClaimRepository;
 
     @PostMapping(path="/addPolicy") // Map ONLY POST Requests
     public @ResponseBody String addNewPolicy (
@@ -59,17 +63,38 @@ public class MainController {
         return "Saved";
     }
 
+    @PostMapping(path="/addDamageClaim") // Map ONLY POST Requests
+    public @ResponseBody String addDamageClaim (
+            @RequestParam Date issuedDate,
+            @RequestParam String claimReason,
+            @RequestParam String claimIssuerCNP) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        DamageClaim claim = new DamageClaim();
+        claim.setIssuedDate(issuedDate);
+        claim.setClaimReason(claimReason);
+        claim.setClaimIssuerCNP(claimIssuerCNP);
+        damageClaimRepository.save(claim);
+        return "Saved";
+    }
+
     @GetMapping(path="/getPolicy")
     public @ResponseBody Iterable<Policy> getAllPolicy() {
         // This returns a JSON or XML with the users
         return policyRepository.findAll();
     }
 
-        @GetMapping(path="/getPrimes")
-        public @ResponseBody Iterable<Primes> getAllPrimes() {
-            // This returns a JSON or XML with the users
-            return primesRepository.findAll();
-        }
+    @GetMapping(path="/getPrimes")
+    public @ResponseBody Iterable<Primes> getAllPrimes() {
+        // This returns a JSON or XML with the users
+        return primesRepository.findAll();
+    }
 
+    @GetMapping(path="/getDamageClaims")
+    public @ResponseBody Iterable<DamageClaim> getAllDamageClaims() {
+        // This returns a JSON or XML with the users
+        return damageClaimRepository.findAll();
+    }
 
 }
