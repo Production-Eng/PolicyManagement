@@ -5,6 +5,20 @@ import javax.persistence.*;
 
 @Entity
 public class Policy {
+
+    public Policy()
+    {
+
+    }
+
+    public Policy(Long idpol, String policyNumber, String policyHolderFirstName, String policyHolderLastName, String CNP)
+    {
+        this.idpol = idpol;
+        this.policyNumber = policyNumber;
+        this.policyHolderFirstName = policyHolderFirstName;
+        this.policyHolderLastName = policyHolderLastName;
+        this.CNP = CNP;
+    }
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long idpol;
@@ -15,6 +29,8 @@ public class Policy {
 
     private String CNP;
 
+    private String infoLetter;
+
     public void setPolicyNumber(String policyNumber)
     {
         this.policyNumber = policyNumber;
@@ -23,6 +39,11 @@ public class Policy {
     public void setPolicyHolderFirstName(String policyHolderFirstName)
     {
         this.policyHolderFirstName = policyHolderFirstName;
+    }
+
+    public void setId(Long id)
+    {
+        this.idpol = id;
     }
 
     public void setPolicyHolderLastName(String policyHolderLastName)
@@ -58,6 +79,12 @@ public class Policy {
     public String getCNP()
     {
         return CNP;
+    }
+
+    public String infoLetter()
+    {
+        String letterText = "Stimate domn/doamna " + this.getPolicyHolderFirstName() + " " + this.getPolicyHolderLastName() + ", identificat prin " + this.getCNP() + ", avand polita " + this.getPolicyNumber() + " \r\nva multumim ca sunteti alaturi de noi si ca ne sunteti in continuare client\r\nVa dorim o zi buna!\r\nEchipa de la marketing";
+        return letterText;
     }
 
 
