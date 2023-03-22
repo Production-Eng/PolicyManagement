@@ -14,6 +14,10 @@ public class DamageClaim {
     private String claimReason;
     private String claimIssuerCNP;
 
+    private Float damageValue;
+
+    private Float totalDamageValue;
+
     public int getIdDamageClaim() {
         return idDamageClaim;
     }
@@ -44,5 +48,27 @@ public class DamageClaim {
 
     public void setClaimIssuerCNP(String claimIssuerCNP) {
         this.claimIssuerCNP = claimIssuerCNP;
+    }
+
+    public Float getDamageValue() {
+        return damageValue;
+    }
+
+    public void setDamageValue(Float damageValue) {
+        this.damageValue = damageValue;
+    }
+    public DamageClaim() {
+    }
+
+    public DamageClaim(int idDamageClaim, Date issuedDate, String claimReason, String claimIssuerCNP, Float damageValue) {
+        this.idDamageClaim = idDamageClaim;
+        this.issuedDate = issuedDate;
+        this.claimReason = claimReason;
+        this.claimIssuerCNP = claimIssuerCNP;
+        this.damageValue = damageValue;
+    }
+
+    public Float getTotalDamageValue () {
+        return this.damageValue + 0.3f * this.damageValue;
     }
 }
