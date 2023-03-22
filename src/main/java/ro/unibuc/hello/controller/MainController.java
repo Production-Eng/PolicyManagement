@@ -8,12 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ro.unibuc.hello.models.PolicyRepository;
-import ro.unibuc.hello.models.Policy;
-import ro.unibuc.hello.models.PrimesRepository;
-import ro.unibuc.hello.models.Primes;
-import ro.unibuc.hello.models.DamageClaimRepository;
-import ro.unibuc.hello.models.DamageClaim;
+import ro.unibuc.hello.models.*;
 import java.util.Date;
 
 @Controller // This means that this class is a Controller
@@ -28,6 +23,9 @@ public class MainController {
 
     @Autowired
     private DamageClaimRepository damageClaimRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
 
     @PostMapping(path="/addPolicy") // Map ONLY POST Requests
     public @ResponseBody String addNewPolicy (
@@ -79,6 +77,20 @@ public class MainController {
         return "Saved";
     }
 
+    @PostMapping(path="/addClient") // Map ONLY POST Requests
+    public @ResponseBody String addClient (
+            @RequestParam String name,
+            @RequestParam String cnp) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        Client client = new Client();
+        client.setName(name);
+        client.setCnp(cnp);
+        clientRepository.save(client);
+        return "Saved";
+    }
+
     @GetMapping(path="/getPolicy")
     public @ResponseBody Iterable<Policy> getAllPolicy() {
         // This returns a JSON or XML with the users
@@ -95,6 +107,12 @@ public class MainController {
     public @ResponseBody Iterable<DamageClaim> getAllDamageClaims() {
         // This returns a JSON or XML with the users
         return damageClaimRepository.findAll();
+    }
+
+    @GetMapping(path="/getClient")
+    public @ResponseBody Iterable<Client> getAllClients() {
+        // This returns a JSON or XML with the users
+        return clientRepository.findAll();
     }
 
 }
