@@ -10,6 +10,16 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int idClient;
+
+    public Client() {
+    }
+
+    public Client(int idClient, String name, String cnp) {
+        this.idClient = idClient;
+        this.name = name;
+        this.cnp = cnp;
+    }
+
     private  String name;
     private String cnp;
 
